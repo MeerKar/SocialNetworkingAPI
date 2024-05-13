@@ -1,42 +1,48 @@
-const { Schema, model } = require("mongoose");
-const reactionSchema = require("./reaction");
-const moment = require("moment");
+const mongoose = require("mongoose");
 
-const thoughtSchema = new Schema(
+const reactionSchema = new mongoose.Schema(
   {
-    thoughtText: {
+    reactionId: {
+      type: mongoose.Schema.Types.ObjectId,
+      default: () => new mongoose.Types.ObjectId(),
+    },
+    reactionBody: {
       type: String,
       required: true,
-      maxlength: 250,
-      minlength: 1,
-    },
-
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get: (createdAtVal) =>
-        moment(createdAtVal).format("MMM DD, YYYY [at] hh:mm a"),
+      maxLength: 280,
     },
     username: {
       type: String,
       required: true,
     },
-
-    reactions: [reactionSchema],
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
-    toJSON: {
-      virtuals: true,
-      getters: true,
-    },
-    id: false,
+    _id: false,
   }
 );
-// Increases reaction count in Thought model object when reactions are added to a thought
-thoughtSchema.virtual("reactionCount").get(function () {
-  return this.reactions.length;
+
+const thoughtSchema = new mongoose.Schema({
+  thoughtText: {
+    type: String,
+    required: true,
+    minLength: 1,
+    maxLength: 280,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
+  reactions: [reactionSchema],
 });
 
-const Thought = model("thought", thoughtSchema);
+const Thought = mongoose.model("Thought", thoughtSchema);
 
 module.exports = Thought;

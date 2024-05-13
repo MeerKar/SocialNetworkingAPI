@@ -1,10 +1,11 @@
-const { Schema, Types } = require("mongoose");
+const mongoose = require("mongoose");
+const { Schema } = require("mongoose");
 
 const reactionSchema = new Schema(
   {
     reactionId: {
       type: Schema.Types.ObjectId,
-      default: () => new Types.ObjectId(),
+      default: () => new mongoose.Types.ObjectId(),
     },
     reactionBody: {
       type: String,
@@ -18,16 +19,17 @@ const reactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: (createdAtVal) =>
-        moment(createdAtVal).format("MMM DD, YYYY [at] hh:mm a"),
+      get: function (value) {
+        return value.toDateString();
+      },
     },
   },
   {
     toJSON: {
-      virtuals: true,
       getters: true,
     },
     id: false,
   }
 );
+
 module.exports = reactionSchema;

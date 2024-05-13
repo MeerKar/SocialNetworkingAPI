@@ -1,56 +1,31 @@
-const { Schema, model } = require("mongoose");
-const reactionSchema = require("./reaction");
+const mongoose = require("mongoose");
 
-// Schema to create Student model
-const userSchema = new Schema(
-  {
-    username: {
-      type: String,
-      unique: true,
-      required: true,
-      trim: true,
-      index: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      match: [/.+@.+\..+/, "Must match an email address!"],
-      index: true,
-    },
-    thoughts: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "thought",
-      },
-    ],
-    friends: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "user",
-      },
-    ],
-    reactions: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "reaction",
-      },
-    ],
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
   },
-  {
-    toJSON: {
-      getters: true,
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    match: [/.+@.+\..+/, "Must match an email address pattern!"],
+  },
+  thoughts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Thought",
     },
-  }
-);
-
-// Increases friend count in User model object when friends are added by a user
-userSchema.virtual("friendCount").get(function () {
-  return this.friends.length;
+  ],
+  friends: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
-// Creates User model with userSchema
-const User = model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 
-// Exports
 module.exports = User;
