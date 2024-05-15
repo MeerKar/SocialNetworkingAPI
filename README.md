@@ -1,9 +1,13 @@
 # Social Networking API
 This project has three parts
 
+
 Introduction
+
 Problem
+
 Solution
+
 
 ## Introduction
 
