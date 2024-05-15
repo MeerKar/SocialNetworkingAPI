@@ -112,7 +112,7 @@ const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 const getRandomUsername = () =>
   `${getRandomArrItem(username)} ${getRandomArrItem(username)}`;
 
-// Function to generate random thoughts that we can add to username object.
+// Generates random thoughts
 const getRandomThoughts = (int) => {
   const maxReactions = 50;
   const minReactions = 1;
@@ -139,7 +139,7 @@ const getRandomThoughts = (int) => {
 };
 
 const getRandomEmail = () => {
-  const usernameLength = Math.floor(Math.random() * (10 - 5 + 1)) + 5; // Random username length between 5 and 10 characters
+  const usernameLength = Math.floor(Math.random() * (10 - 5 + 1)) + 5;
   const domain = [
     "gmail.com",
     "yahoo.com",
@@ -148,7 +148,7 @@ const getRandomEmail = () => {
     "hmail.com",
     "qmail.com",
     "aol.com",
-  ][Math.floor(Math.random() * 6)]; // Random domain from a list
+  ][Math.floor(Math.random() * 6)];
 
   let usernames = "";
   const characters =

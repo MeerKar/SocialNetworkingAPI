@@ -9,7 +9,7 @@ const {
   removeFriend,
 } = require("../../controllers/userController");
 
-// /api/users
+//GET ,POST localhost:3001/api/users
 router.route("/").get(getUsers).post(createUser);
 
 // /api/users/:userId

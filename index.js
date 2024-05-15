@@ -12,6 +12,10 @@ const activity = cwd.includes("01-Activities")
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+// GET localhost:3001/
+app.get("/", (req, res) => {
+  res.json({ success: true });
+});
 app.use(routes);
 
 db.once("open", () => {
